@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickKit - Free Online Tools</title>
+<style>
+:root {
+  --bg:#0b1020;
+  --panel:#151d32;
+  --border:#27334c;
+  --purple:#7967ff;
+  --text:#f4f5ff;
+  --muted:#9ba8c2;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header {
+  padding:20px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+}
+.logo { font-size:25px; font-weight:800; }
+.logo span { color:var(--purple); }
+.tag { color:var(--muted); font-size:13px; }
+main { max-width:1050px; margin:auto; padding:65px 22px; }
+.hero { text-align:center; margin-bottom:45px; }
+.hero h1 { font-size:clamp(34px,6vw,55px); margin:0 0 15px; }
+.hero h1 span { color:var(--purple); }
+.hero p { color:var(--muted); line-height:1.6; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:23px;
+}
+.card h2 { font-size:19px; margin-top:0; }
+.card p { color:var(--muted); font-size:13px; }
+input,textarea,select {
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  background:#0b1326;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  font:inherit;
+}
+textarea { resize:vertical; min-height:105px; }
+button {
+  background:var(--purple);
+  color:white;
+  border:0;
+  padding:12px 17px;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:7px;
+}
+button:hover { opacity:.85; }
+.result {
+  color:#b9afff;
+  font-weight:bold;
+  min-height:22px;
+  margin-top:14px;
+  overflow-wrap:anywhere;
+}
+footer {
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ Quick<span>Kit</span></div>
+  <div class="tag">Free tools. No hassle.</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Everyday tools.<br><span>Made simple.</span></h1>
+    <p>Free online tools to make your everyday tasks easier.<br>
+    Fast, simple, and completely free to use.</p>
+  </section>
+
+  <section class="grid">
+
+    <div class="card">
+      <h2>📝 Word Counter</h2>
+      <p>Count words and characters in your text.</p>
+      <textarea id="words" placeholder="Type or paste your text..."></textarea>
+      <div class="result" id="wordResult">0 words · 0 characters</div>
+    </div>
+
+    <div class="card">
+      <h2>🧮 Percentage Calculator</h2>
+      <p>Find a percentage of any number.</p>
+      <input id="percent" type="number" placeholder="Percentage (%)">
+      <input id="number" type="number" placeholder="Your number">
+      <button onclick="percentage()">Calculate</button>
+      <div class="result" id="percentResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>📊 Average Calculator</h2>
+      <p>Calculate the average of multiple numbers.</p>
+      <input id="averageInput" placeholder="Example: 10, 20, 30">
+      <button onclick="average()">Calculate Average</button>
+      <div class="result" id="averageResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔠 Text Case Converter</h2>
+      <p>Change your text into different formats.</p>
+      <textarea id="caseInput" placeholder="Enter your text..."></textarea>
+      <select id="caseType">
+        <option value="upper">UPPERCASE</option>
+        <option value="lower">lowercase</option>
+        <option value="title">Title Case</option>
+      </select>
+      <button onclick="convertCase()">Convert Text</button>
+      <div class="result" id="caseResult"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔤 Character Counter</h2>
+      <p>Count characters with or without spaces.</p>
+      <textarea id="charInput" placeholder="Start typing..."></textarea>
+      <div class="result" id="charResult">0 characters</div>
+      <div class="tag" id="noSpaceResult">0 without spaces</div>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  © 2026 QuickKit · Free tools for everyone
+</footer>
+
+<script>
+const words = document.getElementById("words");
+
+words.addEventListener("input", () => {
+  const text = words.value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  document.getElementById("wordResult").textContent =
+    count + " words · " + words.value.length + " characters";
+});
+
+function percentage() {
+  const p = document.getElementById("percent").value;
+  const n = document.getElementById("number").value;
+  const result = document.getElementById("percentResult");
+
+  if (p === "" || n === "") {
+    result.textContent = "Enter both numbers.";
+    return;
+  }
+
+  result.textContent = (Number(p) / 100 * Number(n)).toLocaleString();
+}
+
+function average() {
+  const input = document.getElementById("averageInput").value;
+  const result = document.getElementById("averageResult");
+
+  const values = input.split(",").map(x => x.trim());
+
+  if (!input.trim() || values.some(x => x === "" || !Number.isFinite(Number(x)))) {
+    result.textContent = "Enter valid numbers separated by commas.";
+    return;
+  }
+
+  const nums = values.map(Number);
+  const avg = nums.reduce((a,b) => a+b, 0) / nums.length;
+  result.textContent = "Average: " + avg.toLocaleString(undefined, {maximumFractionDigits:4});
+}
+
+function convertCase() {
+  const text = document.getElementById("caseInput").value;
+  const type = document.getElementById("caseType").value;
+  let output = text;
+
+  if (type === "upper") output = text.toUpperCase();
+  if (type === "lower") output = text.toLowerCase();
+  if (type === "title") {
+    output = text.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  document.getElementById("caseResult").textContent = output;
+}
+
+const charInput = document.getElementById("charInput");
+
+charInput.addEventListener("input", () => {
+  const text = charInput.value;
+  document.getElementById("charResult").textContent =
+    text.length + " characters";
+  document.getElementById("noSpaceResult").textContent =
+    text.replace(/\s/g, "").length + " without spaces";
+});
+</script>
+
+</body>
+</html>
