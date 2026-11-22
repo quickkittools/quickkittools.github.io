@@ -85,6 +85,33 @@ footer {
   border-top:1px solid var(--border);
   font-size:13px;
 }
+  
+.search-container {
+  max-width: 550px;
+  margin: 28px auto 0;
+}
+
+#toolSearch {
+  width: 100%;
+  padding: 17px 20px;
+  border: 1px solid #3b4260;
+  border-radius: 12px;
+  background: #151d32;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#toolSearch:focus {
+  border-color: #7967ff;
+}
+
+#searchMessage {
+  margin-top: 12px;
+  text-align: center;
+}
+
 </style>
 </head>
 <body>
@@ -99,6 +126,18 @@ footer {
     <h1>Everyday tools.<br><span>Made simple.</span></h1>
     <p>Free online tools to make your everyday tasks easier.<br>
     Fast, simple, and completely free to use.</p>
+    
+<div class="search-container">
+  <input
+    type="search"
+    id="toolSearch"
+    placeholder="🔍 Search for a tool..."
+    oninput="searchTools()"
+    autocomplete="off"
+  >
+  <p id="searchMessage" class="tag"></p>
+</div>
+
   </section>
 
   <section class="grid">
@@ -574,7 +613,31 @@ function convertWeight() {
     undefined, { maximumFractionDigits: 6 }
   ) + " " + to;
 }
+function searchTools() {
+  const query = document
+    .getElementById("toolSearch")
+    .value.toLowerCase().trim();
 
+  const cards = document.querySelectorAll(".grid .card");
+  let visible = 0;
+
+  cards.forEach(card => {
+    const matches = card.textContent.toLowerCase().includes(query);
+    card.style.display = matches ? "" : "none";
+    if (matches) visible++;
+  });
+
+  const message = document.getElementById("searchMessage");
+
+  if (query === "") {
+    message.textContent = "";
+  } else if (visible === 0) {
+    message.textContent = "No tools found. Try another search.";
+  } else {
+    message.textContent = "Found " + visible +
+      (visible === 1 ? " tool" : " tools");
+  }
+}
 </script>
 
 </body>
