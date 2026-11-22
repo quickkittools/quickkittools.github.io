@@ -148,6 +148,128 @@ footer {
       <div class="tag" id="noSpaceResult">0 without spaces</div>
     </div>
 
+<!-- DAYS BETWEEN DATES -->
+<div class="card">
+  <h2>📅 Days Between Dates</h2>
+  <p>Find the number of days between two dates.</p>
+  <input type="date" id="date1">
+  <input type="date" id="date2">
+  <button onclick="daysBetween()">Calculate</button>
+  <div class="result" id="dateResult"></div>
+</div>
+
+<!-- TIP CALCULATOR -->
+<div class="card">
+  <h2>💵 Tip Calculator</h2>
+  <p>Calculate a tip and split the bill.</p>
+  <input type="number" id="bill" placeholder="Bill amount ($)" min="0">
+  <input type="number" id="tip" placeholder="Tip percentage" value="15" min="0">
+  <input type="number" id="people" placeholder="Number of people" value="1" min="1">
+  <button onclick="calculateTip()">Calculate</button>
+  <div class="result" id="tipResult"></div>
+</div>
+
+<!-- DISCOUNT CALCULATOR -->
+<div class="card">
+  <h2>🏷️ Discount Calculator</h2>
+  <p>Find your sale price and savings.</p>
+  <input type="number" id="originalPrice" placeholder="Original price ($)" min="0">
+  <input type="number" id="discount" placeholder="Discount (%)" min="0" max="100">
+  <button onclick="calculateDiscount()">Calculate</button>
+  <div class="result" id="discountResult"></div>
+</div>
+
+<!-- AGE CALCULATOR -->
+<div class="card">
+  <h2>🎂 Age Calculator</h2>
+  <p>Find your age in years, months and days.</p>
+  <input type="date" id="birthday">
+  <button onclick="calculateAge()">Calculate Age</button>
+  <div class="result" id="ageResult"></div>
+</div>
+
+<!-- READING TIME -->
+<div class="card">
+  <h2>📖 Reading Time</h2>
+  <p>Estimate how long your text takes to read.</p>
+  <textarea id="readingText" placeholder="Paste your text here..."></textarea>
+  <div class="result" id="readingResult">0 minutes</div>
+</div>
+
+<!-- TEXT REVERSER -->
+<div class="card">
+  <h2>🔄 Text Reverser</h2>
+  <p>Reverse any text instantly.</p>
+  <textarea id="reverseInput" placeholder="Enter text..."></textarea>
+  <button onclick="reverseText()">Reverse Text</button>
+  <div class="result" id="reverseResult"></div>
+</div>
+
+<!-- RANDOM NUMBER -->
+<div class="card">
+  <h2>🎲 Random Number Generator</h2>
+  <p>Generate a random number between two values.</p>
+  <input type="number" id="randomMin" placeholder="Minimum" value="1">
+  <input type="number" id="randomMax" placeholder="Maximum" value="100">
+  <button onclick="randomNumber()">Generate</button>
+  <div class="result" id="randomResult"></div>
+</div>
+
+<!-- PASSWORD GENERATOR -->
+<div class="card">
+  <h2>🔐 Password Generator</h2>
+  <p>Generate a random password on your device.</p>
+  <input type="number" id="passwordLength" value="16" min="8" max="64" placeholder="Password length">
+  <button onclick="generatePassword()">Generate Password</button>
+  <div class="result" id="passwordResult"></div>
+  <button onclick="copyPassword()">Copy Password</button>
+  <div class="tag">Your password is generated locally.</div>
+</div>
+
+<!-- LENGTH CONVERTER -->
+<div class="card">
+  <h2>📏 Length Converter</h2>
+  <p>Convert between common length units.</p>
+  <input type="number" id="lengthValue" placeholder="Enter a value">
+  <select id="lengthFrom">
+    <option value="m">Meters</option>
+    <option value="km">Kilometers</option>
+    <option value="cm">Centimeters</option>
+    <option value="mi">Miles</option>
+    <option value="ft">Feet</option>
+    <option value="in">Inches</option>
+  </select>
+  <select id="lengthTo">
+    <option value="ft">Feet</option>
+    <option value="m">Meters</option>
+    <option value="km">Kilometers</option>
+    <option value="cm">Centimeters</option>
+    <option value="mi">Miles</option>
+    <option value="in">Inches</option>
+  </select>
+  <button onclick="convertLength()">Convert</button>
+  <div class="result" id="lengthResult"></div>
+</div>
+
+<!-- WEIGHT CONVERTER -->
+<div class="card">
+  <h2>⚖️ Weight Converter</h2>
+  <p>Convert between kilograms, pounds and grams.</p>
+  <input type="number" id="weightValue" placeholder="Enter a value">
+  <select id="weightFrom">
+    <option value="kg">Kilograms</option>
+    <option value="lb">Pounds</option>
+    <option value="g">Grams</option>
+  </select>
+  <select id="weightTo">
+    <option value="lb">Pounds</option>
+    <option value="kg">Kilograms</option>
+    <option value="g">Grams</option>
+  </select>
+  <button onclick="convertWeight()">Convert</button>
+  <div class="result" id="weightResult"></div>
+</div>
+
   </section>
 </main>
 
@@ -217,6 +339,242 @@ charInput.addEventListener("input", () => {
   document.getElementById("noSpaceResult").textContent =
     text.replace(/\s/g, "").length + " without spaces";
 });
+  
+// DAYS BETWEEN DATES
+function daysBetween() {
+  const a = document.getElementById("date1").value;
+  const b = document.getElementById("date2").value;
+  const result = document.getElementById("dateResult");
+
+  if (!a || !b) {
+    result.textContent = "Please select both dates.";
+    return;
+  }
+
+  const d1 = new Date(a + "T00:00:00Z");
+  const d2 = new Date(b + "T00:00:00Z");
+  const days = Math.abs(d2 - d1) / 86400000;
+
+  result.textContent = days + " days apart";
+}
+
+// TIP CALCULATOR
+function calculateTip() {
+  const bill = Number(document.getElementById("bill").value);
+  const tip = Number(document.getElementById("tip").value);
+  const people = Number(document.getElementById("people").value);
+  const result = document.getElementById("tipResult");
+
+  if (
+    document.getElementById("bill").value === "" ||
+    document.getElementById("tip").value === "" ||
+    document.getElementById("people").value === "" ||
+    !Number.isFinite(bill) ||
+    !Number.isFinite(tip) ||
+    !Number.isFinite(people) ||
+    bill < 0 || tip < 0 || people <= 0
+  ) {
+    result.textContent = "Enter valid amounts.";
+    return;
+  }
+
+  const total = bill * (1 + tip / 100);
+  result.textContent =
+    "Total: $" + total.toFixed(2) +
+    " · Per person: $" + (total / people).toFixed(2);
+}
+
+// DISCOUNT CALCULATOR
+function calculateDiscount() {
+  const price = Number(document.getElementById("originalPrice").value);
+  const discount = Number(document.getElementById("discount").value);
+  const result = document.getElementById("discountResult");
+
+  if (
+    document.getElementById("originalPrice").value === "" ||
+    document.getElementById("discount").value === "" ||
+    !Number.isFinite(price) ||
+    !Number.isFinite(discount) ||
+    price < 0 || discount < 0 || discount > 100
+  ) {
+    result.textContent = "Enter a valid price and discount.";
+    return;
+  }
+
+  const savings = price * discount / 100;
+  result.textContent =
+    "Sale price: $" + (price - savings).toFixed(2) +
+    " · You save: $" + savings.toFixed(2);
+}
+
+// AGE CALCULATOR
+function calculateAge() {
+  const value = document.getElementById("birthday").value;
+  const result = document.getElementById("ageResult");
+
+  if (!value) {
+    result.textContent = "Please enter your birthday.";
+    return;
+  }
+
+  const [y, m, d] = value.split("-").map(Number);
+  const birth = new Date(y, m - 1, d);
+  const today = new Date();
+
+  if (birth > today) {
+    result.textContent = "Birthday cannot be in the future.";
+    return;
+  }
+
+  let years = today.getFullYear() - y;
+  let months = today.getMonth() - (m - 1);
+  let days = today.getDate() - d;
+
+  if (days < 0) {
+    months--;
+    days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  result.textContent =
+    years + " years, " + months + " months, " + days + " days";
+}
+
+// READING TIME
+const readingText = document.getElementById("readingText");
+
+readingText.addEventListener("input", () => {
+  const count = readingText.value.trim()
+    ? readingText.value.trim().split(/\s+/).length : 0;
+
+  const minutes = count / 200;
+  const display = minutes < 1
+    ? Math.max(1, Math.ceil(minutes * 60)) + " seconds"
+    : Math.ceil(minutes) + " minutes";
+
+  document.getElementById("readingResult").textContent =
+    count + " words · About " + (count ? display : "0 minutes");
+});
+
+// TEXT REVERSER
+function reverseText() {
+  const text = document.getElementById("reverseInput").value;
+  document.getElementById("reverseResult").textContent =
+    Array.from(text).reverse().join("");
+}
+
+// RANDOM NUMBER GENERATOR
+function randomNumber() {
+  const minInput = document.getElementById("randomMin").value;
+  const maxInput = document.getElementById("randomMax").value;
+  const result = document.getElementById("randomResult");
+
+  const min = Number(minInput);
+  const max = Number(maxInput);
+
+  if (
+    minInput === "" || maxInput === "" ||
+    !Number.isSafeInteger(min) ||
+    !Number.isSafeInteger(max) ||
+    min > max
+  ) {
+    result.textContent = "Enter valid whole numbers.";
+    return;
+  }
+
+  const number = Math.floor(Math.random() * (max - min + 1)) + min;
+  result.textContent = "Your number: " + number;
+}
+
+// PASSWORD GENERATOR
+let generatedPassword = "";
+
+function generatePassword() {
+  const length = Number(document.getElementById("passwordLength").value);
+  const result = document.getElementById("passwordResult");
+
+  if (!Number.isInteger(length) || length < 8 || length > 64) {
+    result.textContent = "Choose a length from 8 to 64.";
+    return;
+  }
+
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+  const random = new Uint32Array(length);
+  crypto.getRandomValues(random);
+
+  generatedPassword = Array.from(random)
+    .map(n => chars[n % chars.length])
+    .join("");
+
+  result.textContent = generatedPassword;
+}
+
+function copyPassword() {
+  if (!generatedPassword) {
+    document.getElementById("passwordResult").textContent =
+      "Generate a password first.";
+    return;
+  }
+
+  navigator.clipboard.writeText(generatedPassword)
+    .then(() => {
+      document.getElementById("passwordResult").textContent =
+        "Password copied!";
+    })
+    .catch(() => {
+      document.getElementById("passwordResult").textContent =
+        "Copy unavailable. Select the password manually.";
+    });
+}
+
+// LENGTH CONVERTER
+function convertLength() {
+  const value = document.getElementById("lengthValue").value;
+  const from = document.getElementById("lengthFrom").value;
+  const to = document.getElementById("lengthTo").value;
+  const result = document.getElementById("lengthResult");
+
+  const factors = {
+    m: 1, km: 1000, cm: 0.01,
+    mi: 1609.344, ft: 0.3048, in: 0.0254
+  };
+
+  if (value === "" || !Number.isFinite(Number(value))) {
+    result.textContent = "Enter a valid number.";
+    return;
+  }
+
+  const converted = Number(value) * factors[from] / factors[to];
+  result.textContent = converted.toLocaleString(
+    undefined, { maximumFractionDigits: 6 }
+  ) + " " + to;
+}
+
+// WEIGHT CONVERTER
+function convertWeight() {
+  const value = document.getElementById("weightValue").value;
+  const from = document.getElementById("weightFrom").value;
+  const to = document.getElementById("weightTo").value;
+  const result = document.getElementById("weightResult");
+
+  const factors = { kg: 1, lb: 0.45359237, g: 0.001 };
+
+  if (value === "" || !Number.isFinite(Number(value))) {
+    result.textContent = "Enter a valid number.";
+    return;
+  }
+
+  const converted = Number(value) * factors[from] / factors[to];
+  result.textContent = converted.toLocaleString(
+    undefined, { maximumFractionDigits: 6 }
+  ) + " " + to;
+}
+
 </script>
 
 </body>
