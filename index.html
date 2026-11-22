@@ -15,10 +15,10 @@
   --muted:#9ba8c2;
 }
 * { box-sizing:border-box; }
-body {
+body { font-family: 'Inter', sans-serif; }
   margin:0;
   font-family:Arial,sans-serif;
-  background:var(--bg);
+  background: #0b1020;
   color:var(--text);
 }
 header {
@@ -111,8 +111,72 @@ footer {
   margin-top: 12px;
   text-align: center;
 }
+.grid .card {
+  background: #151d32;
+  border: 1px solid #252f49;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
 
+.grid .card:hover {
+  transform: translateY(-4px);
+  border-color: #7967ff;
+}
+
+button {
+  background: #7057f5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #806bff;
+}
+  h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  color: #ffffff;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+p {
+  line-height: 1.7;
+  color: #aab4cc;
+}
+
+.tag {
+  color: #a99aff;
+  font-weight: 600;
+}
+
+.search-container {
+  max-width: 550px;
+  margin: 28px auto 0;
+}
+
+#toolSearch {
+  border: 1px solid #303b59;
+  background: #151d32;
+  border-radius: 14px;
+  padding: 17px 20px;
+  color: white;
+}
 </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
