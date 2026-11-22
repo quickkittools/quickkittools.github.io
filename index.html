@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -230,6 +229,16 @@ main {
   min-height: 56px;
   box-shadow: 0 5px 20px rgba(121, 103, 255, 0.10);
 }
+
+/* NEW TOOL LAYOUTS */
+.two-inputs { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.two-inputs input { min-width:0; }
+.stopwatch-display { font-size:30px; letter-spacing:1px; }
+.qr-image-wrap { margin-top:12px; text-align:center; }
+.qr-image-wrap img { max-width:190px; width:100%; background:white; padding:10px; border-radius:10px; }
+.typing-prompt { padding:12px; background:#0b1326; border:1px solid var(--border); border-radius:8px; }
+input[type="color"] { height:55px; padding:5px; cursor:pointer; }
+
 </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -428,7 +437,130 @@ main {
   </select>
   <button onclick="convertWeight()">Convert</button>
   <div class="result" id="weightResult"></div>
-</div>
+    </div>
+
+    <!-- FRACTION CALCULATOR -->
+    <div class="card">
+      <h2>➗ Fraction Calculator</h2>
+      <p>Add, subtract, multiply or divide two fractions.</p>
+      <div class="two-inputs">
+        <input type="number" id="fracNum1" placeholder="First numerator">
+        <input type="number" id="fracDen1" placeholder="First denominator">
+      </div>
+      <select id="fracOperation">
+        <option value="+">Add (+)</option>
+        <option value="-">Subtract (−)</option>
+        <option value="*">Multiply (×)</option>
+        <option value="/">Divide (÷)</option>
+      </select>
+      <div class="two-inputs">
+        <input type="number" id="fracNum2" placeholder="Second numerator">
+        <input type="number" id="fracDen2" placeholder="Second denominator">
+      </div>
+      <button onclick="calculateFraction()">Calculate</button>
+      <div class="result" id="fractionResult"></div>
+    </div>
+
+    <!-- COUNTDOWN CALCULATOR -->
+    <div class="card">
+      <h2>⏳ Countdown Calculator</h2>
+      <p>See how many days remain until an event.</p>
+      <input type="date" id="countdownDate">
+      <button onclick="calculateCountdown()">Start Countdown</button>
+      <div class="result" id="countdownResult"></div>
+    </div>
+
+    <!-- STOPWATCH -->
+    <div class="card">
+      <h2>⏱️ Stopwatch</h2>
+      <p>Time an activity with start, pause and reset.</p>
+      <div class="result stopwatch-display" id="stopwatchDisplay">00:00.0</div>
+      <button onclick="startStopwatch()">Start</button>
+      <button onclick="pauseStopwatch()">Pause</button>
+      <button onclick="resetStopwatch()">Reset</button>
+    </div>
+
+    <!-- ALPHABETICAL SORTER -->
+    <div class="card">
+      <h2>🔤 Alphabetical Sorter</h2>
+      <p>Sort a list of words or lines from A to Z or Z to A.</p>
+      <textarea id="sortInput" placeholder="Enter one item per line..."></textarea>
+      <select id="sortOrder">
+        <option value="asc">A to Z</option>
+        <option value="desc">Z to A</option>
+      </select>
+      <button onclick="sortList()">Sort List</button>
+      <textarea id="sortResult" placeholder="Sorted list appears here..." readonly></textarea>
+      <button onclick="copyTextFrom('sortResult')">Copy Sorted List</button>
+    </div>
+
+    <!-- RANDOM CHOICE PICKER -->
+    <div class="card">
+      <h2>🎯 Random Choice Picker</h2>
+      <p>Enter choices on separate lines and pick one at random.</p>
+      <textarea id="choiceInput" placeholder="Pizza&#10;Tacos&#10;Pasta"></textarea>
+      <button onclick="pickRandomChoice()">Pick for Me</button>
+      <div class="result" id="choiceResult"></div>
+    </div>
+
+    <!-- QR CODE GENERATOR -->
+    <div class="card">
+      <h2>▦ QR Code Generator</h2>
+      <p>Create a QR code from a link or short text. The text is sent to an external QR service.</p>
+      <input type="text" id="qrInput" placeholder="Paste a link or enter text...">
+      <button onclick="generateQR()">Generate QR Code</button>
+      <div class="result" id="qrResult"></div>
+      <div id="qrImageWrap" class="qr-image-wrap"></div>
+    </div>
+
+    <!-- COLOR PICKER -->
+    <div class="card">
+      <h2>🎨 Color Picker</h2>
+      <p>Choose a color and copy its HEX code.</p>
+      <input type="color" id="colorInput" value="#7967ff" oninput="updateColor()">
+      <div class="result" id="colorResult">#7967FF</div>
+      <button onclick="copyTextValue(document.getElementById('colorInput').value.toUpperCase())">Copy HEX</button>
+    </div>
+
+    <!-- TEMPERATURE CONVERTER -->
+    <div class="card">
+      <h2>🌡️ Temperature Converter</h2>
+      <p>Convert Celsius, Fahrenheit and Kelvin.</p>
+      <input type="number" id="temperatureValue" placeholder="Enter temperature">
+      <select id="temperatureFrom">
+        <option value="C">Celsius (°C)</option>
+        <option value="F">Fahrenheit (°F)</option>
+        <option value="K">Kelvin (K)</option>
+      </select>
+      <select id="temperatureTo">
+        <option value="F">Fahrenheit (°F)</option>
+        <option value="C">Celsius (°C)</option>
+        <option value="K">Kelvin (K)</option>
+      </select>
+      <button onclick="convertTemperature()">Convert</button>
+      <div class="result" id="temperatureResult"></div>
+    </div>
+
+    <!-- TYPING SPEED TEST -->
+    <div class="card">
+      <h2>⌨️ Typing Speed Test</h2>
+      <p>Type the sample text and check your words per minute.</p>
+      <p id="typingPrompt" class="typing-prompt">The quick brown fox jumps over the lazy dog.</p>
+      <textarea id="typingInput" placeholder="Press Start, then type the sample here..." disabled></textarea>
+      <button onclick="startTypingTest()">Start Test</button>
+      <button onclick="finishTypingTest()">Finish</button>
+      <div class="result" id="typingResult"></div>
+    </div>
+
+    <!-- DUPLICATE LINE REMOVER -->
+    <div class="card">
+      <h2>🧹 Duplicate Line Remover</h2>
+      <p>Remove repeated lines while keeping the first occurrence.</p>
+      <textarea id="duplicateInput" placeholder="Paste your lines here..."></textarea>
+      <button onclick="removeDuplicateLines()">Remove Duplicates</button>
+      <textarea id="duplicateResult" placeholder="Cleaned text appears here..." readonly></textarea>
+      <button onclick="copyTextFrom('duplicateResult')">Copy Cleaned Text</button>
+    </div>
 
   </section>
 </main>
@@ -734,6 +866,184 @@ function convertWeight() {
     undefined, { maximumFractionDigits: 6 }
   ) + " " + to;
 }
+
+// FRACTION CALCULATOR
+function calculateFraction() {
+  const n1 = Number(document.getElementById("fracNum1").value);
+  const d1 = Number(document.getElementById("fracDen1").value);
+  const n2 = Number(document.getElementById("fracNum2").value);
+  const d2 = Number(document.getElementById("fracDen2").value);
+  const op = document.getElementById("fracOperation").value;
+  const out = document.getElementById("fractionResult");
+  const fields = ["fracNum1", "fracDen1", "fracNum2", "fracDen2"];
+  if (fields.some(id => document.getElementById(id).value === "")) {
+    out.textContent = "Enter all four fraction values."; return;
+  }
+  if (d1 === 0 || d2 === 0) { out.textContent = "Denominators cannot be zero."; return; }
+  if (op === "/" && n2 === 0) { out.textContent = "You cannot divide by zero."; return; }
+  let numerator, denominator;
+  if (op === "+") { numerator = n1 * d2 + n2 * d1; denominator = d1 * d2; }
+  else if (op === "-") { numerator = n1 * d2 - n2 * d1; denominator = d1 * d2; }
+  else if (op === "*") { numerator = n1 * n2; denominator = d1 * d2; }
+  else { numerator = n1 * d2; denominator = d1 * n2; }
+  if (denominator < 0) { numerator *= -1; denominator *= -1; }
+  function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; }
+  const divisor = gcd(numerator, denominator);
+  numerator /= divisor; denominator /= divisor;
+  out.textContent = "Result: " + numerator + "/" + denominator + " (" + (numerator / denominator).toLocaleString(undefined, {maximumFractionDigits:6}) + ")";
+}
+
+// COUNTDOWN CALCULATOR
+function calculateCountdown() {
+  const value = document.getElementById("countdownDate").value;
+  const out = document.getElementById("countdownResult");
+  if (!value) { out.textContent = "Please choose a date."; return; }
+  const [y, m, d] = value.split("-").map(Number);
+  const target = Date.UTC(y, m - 1, d);
+  const now = new Date();
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.round((target - today) / 86400000);
+  out.textContent = days === 0 ? "That's today!" : days > 0 ? days + " days to go!" : "That date was " + Math.abs(days) + " days ago.";
+}
+
+// STOPWATCH
+let stopwatchElapsed = 0;
+let stopwatchStartedAt = null;
+let stopwatchInterval = null;
+function renderStopwatch() {
+  const elapsed = stopwatchElapsed + (stopwatchStartedAt === null ? 0 : Date.now() - stopwatchStartedAt);
+  const tenths = Math.floor(elapsed / 100);
+  const minutes = Math.floor(tenths / 600);
+  const seconds = Math.floor((tenths % 600) / 10);
+  const decimal = tenths % 10;
+  document.getElementById("stopwatchDisplay").textContent = String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0") + "." + decimal;
+}
+function startStopwatch() {
+  if (stopwatchStartedAt !== null) return;
+  stopwatchStartedAt = Date.now();
+  stopwatchInterval = setInterval(renderStopwatch, 100);
+}
+function pauseStopwatch() {
+  if (stopwatchStartedAt === null) return;
+  stopwatchElapsed += Date.now() - stopwatchStartedAt;
+  stopwatchStartedAt = null;
+  clearInterval(stopwatchInterval);
+  stopwatchInterval = null;
+  renderStopwatch();
+}
+function resetStopwatch() {
+  clearInterval(stopwatchInterval);
+  stopwatchInterval = null;
+  stopwatchElapsed = 0;
+  stopwatchStartedAt = null;
+  renderStopwatch();
+}
+
+// ALPHABETICAL SORTER
+function sortList() {
+  const lines = document.getElementById("sortInput").value.split(/\r?\n/).filter(line => line.trim());
+  const direction = document.getElementById("sortOrder").value;
+  lines.sort((a, b) => a.localeCompare(b, undefined, {sensitivity:"base", numeric:true}));
+  if (direction === "desc") lines.reverse();
+  document.getElementById("sortResult").value = lines.join("\n");
+}
+
+// RANDOM CHOICE PICKER
+function pickRandomChoice() {
+  const choices = document.getElementById("choiceInput").value.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  const out = document.getElementById("choiceResult");
+  if (!choices.length) { out.textContent = "Enter at least one choice."; return; }
+  out.textContent = "Your pick: " + choices[Math.floor(Math.random() * choices.length)];
+}
+
+// QR CODE GENERATOR (uses an external QR code service)
+function generateQR() {
+  const value = document.getElementById("qrInput").value.trim();
+  const wrap = document.getElementById("qrImageWrap");
+  const out = document.getElementById("qrResult");
+  wrap.replaceChildren();
+  if (!value) { out.textContent = "Enter a link or some text first."; return; }
+  const img = document.createElement("img");
+  img.alt = "Generated QR code";
+  img.width = 190;
+  img.height = 190;
+  img.src = "https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=" + encodeURIComponent(value);
+  img.onerror = () => { out.textContent = "Could not load the QR code. Please try again."; wrap.replaceChildren(); };
+  wrap.appendChild(img);
+  out.textContent = "Your QR code:";
+}
+
+// COLOR PICKER
+function updateColor() {
+  document.getElementById("colorResult").textContent = document.getElementById("colorInput").value.toUpperCase();
+}
+
+// TEMPERATURE CONVERTER
+function convertTemperature() {
+  const raw = document.getElementById("temperatureValue").value;
+  const from = document.getElementById("temperatureFrom").value;
+  const to = document.getElementById("temperatureTo").value;
+  const out = document.getElementById("temperatureResult");
+  if (raw === "" || !Number.isFinite(Number(raw))) { out.textContent = "Enter a valid temperature."; return; }
+  const value = Number(raw);
+  let celsius = from === "C" ? value : from === "F" ? (value - 32) * 5 / 9 : value - 273.15;
+  if (celsius < -273.15) { out.textContent = "Temperature cannot be below absolute zero."; return; }
+  const converted = to === "C" ? celsius : to === "F" ? celsius * 9 / 5 + 32 : celsius + 273.15;
+  const unit = to === "C" ? "°C" : to === "F" ? "°F" : "K";
+  out.textContent = converted.toLocaleString(undefined, {maximumFractionDigits:4}) + " " + unit;
+}
+
+// TYPING SPEED TEST
+const typingSample = "The quick brown fox jumps over the lazy dog.";
+let typingStartedAt = null;
+function startTypingTest() {
+  typingStartedAt = Date.now();
+  document.getElementById("typingPrompt").textContent = typingSample;
+  const input = document.getElementById("typingInput");
+  input.disabled = false;
+  input.value = "";
+  input.focus();
+  document.getElementById("typingResult").textContent = "Test started. Type the sample above!";
+}
+function finishTypingTest() {
+  const out = document.getElementById("typingResult");
+  if (typingStartedAt === null) { out.textContent = "Press Start Test first."; return; }
+  const elapsedMinutes = Math.max((Date.now() - typingStartedAt) / 60000, 1 / 60000);
+  const typed = document.getElementById("typingInput").value.trim();
+  const words = typed ? typed.split(/\s+/).length : 0;
+  const wpm = Math.round(words / elapsedMinutes);
+  const correct = Array.from(typed).filter((ch, i) => ch === typingSample[i]).length;
+  const accuracy = typed.length ? Math.round(correct / Math.max(typed.length, typingSample.length) * 100) : 0;
+  out.textContent = "Speed: " + wpm + " WPM · Accuracy: " + accuracy + "%";
+  document.getElementById("typingInput").disabled = true;
+  typingStartedAt = null;
+}
+
+// DUPLICATE LINE REMOVER
+function removeDuplicateLines() {
+  const input = document.getElementById("duplicateInput").value;
+  const lines = input.split(/\r?\n/);
+  const seen = new Set();
+  const unique = lines.filter(line => {
+    const key = line.trim();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  document.getElementById("duplicateResult").value = unique.join("\n");
+}
+
+// COPY HELPERS
+function copyTextValue(value) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(value).catch(() => {});
+  }
+}
+function copyTextFrom(id) {
+  const value = document.getElementById(id).value;
+  copyTextValue(value);
+}
+
 function searchTools() {
   const query = document
     .getElementById("toolSearch")
@@ -763,3 +1073,4 @@ function searchTools() {
 
 </body>
 </html>
+
